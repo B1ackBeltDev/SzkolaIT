@@ -2,7 +2,7 @@
 using namespace std;
 
 void move(int &id, bool from){
-    if(from == false)
+    if(from == 0)
         id--;
 }
 
@@ -10,7 +10,7 @@ int main(){
     const int n = 3;
     int t[n][n] = {{3, 0, 0}, {5, 1, 0}, {44, 12, 60}};
     int dp[n][n];
-    bool where[n][n];
+    bool where[n][n] = {false};
 
     fill(&dp[0][0], &dp[0][0] + n * n, INT_MAX);
 
@@ -21,10 +21,7 @@ int main(){
                 dp[i+1][j] = dp[i][j] + t[i+1][j];
                 where[i+1][j] = true;
             }
-            if(dp[i][j] + t[i+1][j+1] < dp[i+1][j+1]){
-                dp[i+1][j+1] = dp[i][j] + t[i+1][j+1];
-                where[i+1][j+1] = false;
-            }
+            dp[i+1][j+1] = min(dp[i+1][j+1], dp[i][j] + t[i+1][j+1]);
         }
     }
 
